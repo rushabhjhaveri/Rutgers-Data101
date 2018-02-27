@@ -114,3 +114,11 @@ mpi_sub %>%
   theme_fivethirtyeight() +  
   theme(legend.position ='none') +
   ggtitle('Boxplot of the World Regions')
+
+devtools::install_github("devanshagr/PermutationTestSecond")
+
+PermutationTestSecond::Permutation(mpi, "Country", "MPI.Urban",1000,"Montenegro", "Serbia")
+#Result: 0.354
+
+PermutationTestSecond::Permutation(mpi, "Country", "MPI.Urban",1000,"Albania", "Ukraine")
+
