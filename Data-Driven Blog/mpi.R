@@ -55,7 +55,7 @@ mpi %>%
   scale_fill_gradientn(name = '',colours = rev(brewer.pal(10,'Spectral'))) + 
   ggtitle('Countries by Intensity of Deprivation Rural')
 
-#Z-Test
+#Z-Test for MPI Urban / Rural
 mpi.urban <-mpi$MPI.Urban
 mpi.rural <- mpi$MPI.Rural
 mean.urban <- mean(mpi.urban)
@@ -72,3 +72,45 @@ abline(v=zeta, col='red')
 p <- 1-pnorm(zeta)
 #p = 1?????
 
+#Z-Test for Intensity of Deprivation Urban / Rural 
+iod.urban <-mpi$Intensity.of.Deprivation.Urban
+mpi.rural <- mpi$Intensity.of.Deprivation.Rural
+mean.iod.urban <- mean(iod.urban)
+mean.iod.rural <- mean(iod.rural)
+sd.iod.urban <- sd(iod.urban)
+sd.iod.rural <- sd(iod.rural)
+len.iod.urban <- length(iod.urban)
+len.iod.rural <- length(iod.rural)
+sd.iod.urban.rural <- sqrt(sd.iod.urban^2/len.iod.urban + sd.iod.rural^2/len.iod.rural)
+zeta1 <- (mean.iod.urban - mean.iod.rural)/sd.iod.urban.rural
+#zeta1 = -5.108109
+plot(x=seq(from = -5, to= 5, by=0.1),y=dnorm(seq(from = -5, to= 5,  by=0.1),mean=0),type='l',xlab = 'mean difference',  ylab='possibility')
+abline(v=zeta1, col='red')
+p1 <- 1-pnorm(zeta1)
+#p1 = 0.9999998?????
+
+#Load Sub-National Dataset
+mpi_sub <- read.csv("C:/Users/Rushabh/Downloads/MPI_subnational.csv")
+
+#World Region Analysis
+mpi_sub %>%
+  select(World.region, MPI.National) %>%
+  group_by(World.region) %>%
+  summarise(mean_mpi_nat = round(mean(MPI.National), 2)) %>%
+  ggplot(aes(x = reorder(World.region, mean_mpi_nat), y = mean_mpi_nat, fill = mean_mpi_nat)) + 
+  geom_bar(stat ='identity') + 
+  coord_flip() +
+  theme_fivethirtyeight() + 
+  theme(legend.position ='none', axis.text.x = element_text(size = 5,angle = 90)) +
+  scale_fill_gradientn(name = '',colours = rev(brewer.pal(10,'Spectral'))) + 
+  ggtitle('World Region by Mean MPI National')
+
+#Boxplot of World Regions 
+mpi_sub %>%
+  select(World.region, MPI.National) %>%
+  group_by(World.region) %>%
+  ggplot(aes(x = factor(World.region), y = MPI.National, fill = World.region)) + 
+  geom_boxplot(colours = rev(brewer.pal(10,'Spectral'))) +
+  theme_fivethirtyeight() +  
+  theme(legend.position ='none') +
+  ggtitle('Boxplot of the World Regions')
