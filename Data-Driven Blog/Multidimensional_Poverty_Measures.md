@@ -63,3 +63,4 @@ Also, how does this affect factors like intensity of deprivation, or the poverty
 In conclusion, I’d like to end with this plot of the world regions, just as a reminder of how stark and omnipresent poverty is, and hopefully, inspire change.  
 
 ![picture alt](https://github.com/rushabhjhaveri/Rutgers-Data101/blob/master/Data-Driven%20Blog/Plots/worldreganalysis.jpeg) 
+ 
