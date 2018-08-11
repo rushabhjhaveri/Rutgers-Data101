@@ -1,0 +1,12 @@
+install.packages("randomForest")
+library(randomForest)
+
+train<-read.csv("C:/Users/Rushabh/Downloads/Earnings_Numeric_Train.csv")
+test<-read.csv("C:/Users/Rushabh/Downloads/Earnings_Test_Students.csv")
+submission<-read.csv("C:/Users/Rushabh/Downloads/earning_submission.csv")
+View(train)
+View(test)
+View(submission)
+rf<-randomForest(Earnings ~ GPA+Number_Of_Professional_Connections+Major+Graduation_Year+Height+Number_Of_Credits+Number_Of_Parking_Tickets, data = train)
+pred<-predict(rf, newdata = train)
+mean((pred - train$Earnings)^2)
